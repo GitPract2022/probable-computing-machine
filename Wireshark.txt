@@ -1,0 +1,41 @@
+
+Filter expression
+
+
+(ip.addr eq x.x.x.x and ip.addr eq x.x.x.x) and (udp.port.eq xxxxx and udp.port.eq xxxxx)
+
+TCP Error
+tcp.analysis.flags && !tcp.analysis.window_
+
+TCP Reset
+tcp.flags.reset eq 1
+
+HSRP state change
+hsrp.state != 8 && hsrp.state != 16
+
+STP Topology change
+stp.type == 0x80
+
+OSPF state change
+osfp.msg != 1
+
+ICMP Error
+icmp.type eq 3 || icmp.type eq 4 || icmp.type eq
+
+
+============================================================
+
+cfilter - capture filter
+dfilter - display filter
+
+----configuring time zones
+
+wiki.wireshark.com
+
+dns.qry.name = "www.google.com"
+tcp.stream eq 59
+
+tshark
+tcpdump
+tshark 
+
