@@ -1,0 +1,141 @@
+SRC - 9.9.9.9 --> R2 192.168.27.2 --> R5 5.5.5.5   ISP2
+SRC - 9.9.9.9 --> R2 192.168.27.2 --> R5 55.55.55.55   ISP2
+
+SRC - 99.99.99.99 --> R1 192.168.81.1 --> R6 6.6.6.6  ISP1
+SRC - 99.99.99.99 --> R1 192.168.81.1 --> R6 66.66.66.66   ISP1
+
+
+Outgoing traffic - Local preference 
+
+R9#
+ip prefix-list Loop0 seq 10 permit 5.5.5.0/24
+ip prefix-list Loop0 seq 15 permit 55.55.55.0/24
+
+ip prefix-list Loop1 seq 10 permit 6.6.6.0/24
+ip prefix-list Loop1 seq 15 permit 66.66.66.0/24
+
+route-map Loop0 permit 5
+match ip add prefix-list Loop0
+set local-preference 150
+
+route-map Loop1 permit 5
+match ip add perfix-list Loop1
+set local-preference 150
+
+router bgp 400
+neighbor 10.10.79.7 route-map Loop0 in
+neighbor 10.10.89.8 route-map Loop1 in
+
+========================================================
+
+SRC - R5 5.5.5.5 --> R2 192.168.27.2 -->  R9 9.9.9.9  ISP2
+SRC - R6 6.6.6.6 --> R2 192.168.27.2 -->  R9 9.9.9.9  ISP2
+
+SRC - R5 55.55.55.55 --> R1 192.168.81.1 -->  R9 99.99.99.99  ISP1
+SRC - R6 66.66.66.66 --> R1 192.168.81.1 -->  R9 99.99.99.99 ISP1
+
+========================================================
+
+ ip prefix-list Branch-Subnets seq 10 permit 9.9.9.0/24
+ ip prefix-list Branch-Subnets seq 20 permit 99.99.99.0/24
+ ip prefix-list Branch-Subnets seq 30 permit 7.7.7.0/24
+ ip prefix-list Branch-Subnets seq 40 permit 77.77.77.0/24
+ ip prefix-list Branch-Subnets seq 50 permit 8.8.8.0/24
+ ip prefix-list Branch-Subnets seq 60 permit 88.88.88.0/24
+
+
+ ip prefix-list DC-Subnets seq 10 permit 5.5.5.0/24
+ip prefix-list DC-Subnets seq 20 permit 55.55.55.0/24
+ip prefix-list DC-Subnets seq 30 permit 6.6.6.0/24
+ip prefix-list DC-Subnets seq 40 permit 66.66.66.0/24
+ip prefix-list DC-Subnets seq 50 permit 4.4.4.0/24
+ip prefix-list DC-Subnets seq 60 permit 44.44.44.0/24
+ip prefix-list DC-Subnets seq 70 permit 3.3.3.0/24
+ip prefix-list DC-Subnets seq 80 permit 33.33.33.0/24
+
+==========================================================
+
+R1#
+router bgp 100
+ bgp log-neighbor-changes
+ redistribute connected
+ neighbor 10.1.1.6 remote-as 100
+ neighbor 10.1.12.2 remote-as 200
+ neighbor 10.1.12.2 route-map DC-Subnets in
+ neighbor 10.1.13.3 remote-as 300
+ neighbor 10.1.13.3 route-map AS-PATH out
+
+ip prefix-list Branch-Subnets: 4 entries
+   seq 10 permit 6.1.1.1/32
+   seq 20 permit 6.1.2.1/32
+   seq 30 permit 6.1.3.1/32
+   seq 40 permit 6.1.4.1/32
+ip prefix-list DC-Subnets: 4 entries
+   seq 10 permit 5.1.1.1/32
+   seq 20 permit 5.1.2.1/32
+   seq 30 permit 5.1.3.1/32
+   seq 40 permit 5.1.4.1/32
+
+route-map AS-PATH, permit, sequence 5
+  Match clauses:
+    ip address prefix-lists: Branch-Subnets
+  Set clauses:
+    as-path prepend 100 100 100
+  Policy routing matches: 0 packets, 0 bytes
+
+route-map DC-Subnets, permit, sequence 5
+  Match clauses:
+    ip address prefix-lists: DC-Subnets
+  Set clauses:
+    local-preference 150
+  Policy routing matches: 0 packets, 0 bytes
+
+===========================================
+
+
+ip prefix-list Branch-Subnets seq 10 permit 6.1.1.1/32
+ip prefix-list Branch-Subnets seq 20 permit 6.1.2.1/32
+ip prefix-list Branch-Subnets seq 30 permit 6.1.3.1/32
+ip prefix-list Branch-Subnets seq 40 permit 6.1.4.1/32
+ip prefix-list DC-Subnets seq 10 permit 5.1.1.1/32
+ip prefix-list DC-Subnets seq 20 permit 5.1.2.1/32
+ip prefix-list DC-Subnets seq 30 permit 5.1.3.1/32
+ip prefix-list DC-Subnets seq 40 permit 5.1.4.1/32
+ip prefix-list DC-Subnets-55 seq 10 permit 55.1.1.1/32
+ip prefix-list DC-Subnets-55 seq 20 permit 55.1.2.1/32
+
+
+ip prefix-list Branch-Subnets-66 seq 10 permit 66.1.1.1/32
+ip prefix-list Branch-Subnets-66 seq 20 permit 66.1.2.1/32
+
+===============================================================
+
+R1#sh run int fa0/0
+Building configuration...
+ 
+
+Current configuration : 192 bytes
+!
+interface FastEthernet0/0
+ip address 192.168.1.2 255.255.255.0
+duplex auto
+speed auto
+standby 1 ip 192.168.1.1
+standby 1 priority 105
+standby 1 preempt
+standby 1 track Serial0/0
+end	R2#sh run int fa0/0
+Building configuration...
+ 
+
+Current configuration : 168 bytes
+!
+interface FastEthernet0/0
+ip address 192.168.1.3 255.255.255.0
+duplex auto
+speed auto
+standby 1 ip 192.168.1.1
+standby 1 preempt
+standby 1 track Serial0/0
+end
+

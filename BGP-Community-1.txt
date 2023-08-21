@@ -1,0 +1,84 @@
+
+clear ip bgp peer-group ibgp-pgroup soft out
+sh ip bgp peer-group ibgp-pgroup summ
+sh ip bgp peer-group ibgp-pgroup 
+debug ip bgp updates out
+sh ip bgp community
+sh ip bgp community-list AA:NN
+sh ip community-list
+
+
+
+======================================================================
+R6(config-router)#neighbor 172.16.2.1 route-map RM-community-filter ?
+  in   Apply map to incoming routes
+  out  Apply map to outbound routes
+==================================================
+
+Deployment:
+
+– Tag networks 11.11.11.0/24 and 33.33.33.0/24 with a special community tag 55556:666 and filter them from outbound advertisements at the router R1.
+
+– Networks 2.2.2.0/24 and 4.4.4.0/24 will be filtered through a route-map and bind the route map to outbound advertisement with the neighbour R1.
+
+=======================Community====================
+
+R6#
+router bgp 55556
+ bgp log-neighbor-changes
+ network 6.6.6.0 mask 255.255.255.0
+ network 11.11.11.0 mask 255.255.255.0
+ network 22.22.22.0 mask 255.255.255.0
+ network 33.33.33.0 mask 255.255.255.0
+ network 44.44.44.0 mask 255.255.255.0
+ network 172.16.2.0 mask 255.255.255.252
+ neighbor 172.16.2.1 remote-as 55555
+ neighbor 172.16.2.1 send-community both
+ neighbor 172.16.2.1 route-map RM-community-filter out
+
+
+ip prefix-list community-filter seq 5 permit 11.11.11.0/24
+ip prefix-list community-filter seq 10 permit 33.33.33.0/24
+
+route-map RM-community-filter permit 10
+ match ip address prefix-list community-filter
+  set community 55556:666
+ //(set community 3640918682)
+
+route-map RM-community-filter permit 20
+
+================================================
+
+R1#
+ip bgp-community new-format
+ip community-list 10 permit 55556:666
+
+route-map no_community_666 deny 10
+ match community 10
+
+route-map no_community_666 permit 20 
+
+router bgp 55555
+ neighbor ibgp-pgroup route-map no_community_666 out
+
+=======================================================
+– Networks 2.2.2.0/24 and 4.4.4.0/24 will be filtered through a route-map and bind the route map to outbound advertisement with the neighbour R1.
+============================================================
+
+R1#
+router bgp 55555
+neighbor 1.1.2.2 route-map rm-subnet-filter in
+neighbor 1.1.4.2 route-map rm-subnet-filter in
+
+ip prefix-list subnet-filter seq 5 permit 2.2.2.0/24
+ip prefix-list subnet-filter seq 10 permit 4.4.4.0/24
+!
+route-map rm-subnet-filter deny 10
+ match ip address prefix-list subnet-filter
+!
+route-map rm-subnet-filter permit 20
+!
+
+
+
+

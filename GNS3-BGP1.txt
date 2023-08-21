@@ -1,0 +1,38 @@
+R6#sh bgp 172.16.35.0
+BGP routing table entry for 172.16.35.0/24, version 4
+Paths: (2 available, best #2, table default, RIB-failure(17))
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    172.16.56.5 from 172.16.56.5 (55.55.55.55)
+      Origin incomplete, metric 0, localpref 100, valid, internal
+      rx pathid: 0, tx pathid: 0
+  Refresh Epoch 1
+  Local
+    172.16.36.3 from 172.16.36.3 (33.33.33.33)
+      Origin incomplete, metric 0, localpref 100, valid, internal, best
+      rx pathid: 0, tx pathid: 0x0
+
+
+==========================================================
+
+R1#sh ip bgp 172.16.35.0
+BGP routing table entry for 172.16.35.0/24, version 25
+Paths: (2 available, best #2, table default)
+  Advertised to update-groups:
+     1
+  Refresh Epoch 1
+  300
+    192.168.14.4 from 192.168.14.4 (44.44.44.44)
+      Origin incomplete, localpref 100, valid, external
+      rx pathid: 0, tx pathid: 0
+  Refresh Epoch 1
+  300
+    192.168.13.3 from 192.168.13.3 (33.33.33.33)
+      Origin incomplete, metric 0, localpref 100, valid, external, best
+      rx pathid: 0, tx pathid: 0x0
+
+============================================================
+
+ Dynamips error when running command 'nio create_udp udp-e88a3666-31a9-4b02-b472-5d2afff11aee 10040 127.0.0.1 10041
+': unable to create UDP NIO

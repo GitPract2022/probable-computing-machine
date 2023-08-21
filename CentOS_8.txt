@@ -1,0 +1,13 @@
+
+https://centos.org/download/
+x86_64
+.iso
+linux
+Redhat64
+
+root pswd - Centos@2022
+
+user - katana
+
+hostname - centos8
+

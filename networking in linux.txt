@@ -1,0 +1,62 @@
+sudo netstat -tupan
+sudo netstat -tupan | grep :22
+sudo apt install nginx
+sudo systemctl status nginx
+ss -tupan
+lsof
+lsof -u username (katana)
+sudo lsof -c nginx
+
+sudo lsof -iTCP -sTCP:LISTEN -nP
+sudo lsof -iTCP:22 -sTCP:LISTEN -nP
+
+sudo apt install nmap
+
+sudo nmap x.x.x.x -p 80
+nmap -p 80 linux.com
+
+==============================
+
+route -n
+sudo apt update && sudo apt install openssh-server openssh-client --ubuntu
+sudo dnf install openssh-server openssh-clients --centos
+
+systemctl status ssh  --ubuntu
+systemctl status sshd  --centos
+
+
+iptables -A INPUT -p tcp --dport 2278 -s 2.2.2.2 -j ACCEPT
+iptables -A INPUT -p tcp --dport 2278 -j DROP
+
+scp -P 22 a.txt username@x.x.x.x:dst-directory
+
+ping -r ubuntu.com --no recursive domain lookup
+ping -t 3 ubuntu.com  --path device
+ping -q ubuntu.com  --summary
+
+apt update && apt full-upgrade -y
+
+=============================
+
+ssh-keygen -t rsa -b 2048 -C 'comment'
+
+ls -l ~/.ssh/
+
+ssh-copy-id root@x.x.x.x
+
+systemctl restart ssh
+
+putty key generator -- windows
+
+ssh key pair -- linux
+ssh-keygen -b 2048 -t rsa -C 'comment'
+
+Your identification has been saved in /root/.ssh/id_rsa
+Your public key has been saved in /root/.ssh/id_rsa.pub
+
+
+
+
+
+
+

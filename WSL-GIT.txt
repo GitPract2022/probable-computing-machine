@@ -1,0 +1,112 @@
+ubuntu_admin
+root123
+
+https://github.com
+orion.messier4242@gmail.com
+root@kali2050
+
+username/pass
+GitPract2022
+
+Online Repository access URL:
+https://github.com/GitPract2022/firstgitrepo.git
+
+install Git:
+https://git-scm.com/
+
+================================ Pluralsight=================
+https://github.com/GitPract2022/probable-computing-machine
+
+$ ls -al ~/.ssh
+$ ssh-keygen -t rsa -b 4096 -c "rock.santo28@gmail.com"
+$ eval $(ssh-agent -s)
+$ ssh-add ~/.ssh/id_rsa
+$ ssh -t git@github.com
+
+$ cd C:/Users/rocky/GIT-Proj
+
+git clone git@github.com:GitPract2022/probable-computing-machine.git
+
+ls -la 
+cd probable-computing-machine
+git status
+git add .
+git status
+git commit -m "commited by santos"
+git push origin main
+
+================================
+
+
+===================
+create a new repository on the command line
+=====================
+echo "# firstgitrepo" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M master
+git remote add origin https://github.com/GitPract2022/firstgitrepo.git
+git push -u origin master
+
+====================
+push an existing repository from the command line
+====================
+git remote add origin https://github.com/GitPract2022/firstgitrepo.git
+git branch -M master
+git push -u origin master
+
+================================
+==========================
+=================
+===========
+\
+Install Git
+https://code.visualstudio.com
+https://git-scm.com/downloads
+
+git --version
+
+code gitProject/
+
+git --help
+
+git add index.html
+git commit -m "Initial Commit"
+git add index.html
+git rm --cached index.html
+git config --global user.name "KATANA"
+git config --global user.email "KATANA@MSI"
+git log
+git log --oneline
+
+code ~/.gitconfig
+
+========================
+
+https://github.com/GitPract2022/GitProject.git
+git clone https://github.com/GitPract2022/GitProject.git
+git pull origin master
+
+git remote add origin https://github.com/GitPract2022/firstgitrepo.git
+git push origin master
+
+
+git branch --set-upstream-to=origin/master master
+
+---Branching
+git branch feature-1
+git branch
+git checkout feature-1
+git log --oneline
+git checkout master
+git branch -D feature-1
+git pull origin feature-1
+git log --oneline
+git push origin --delete feature-1
+
+
+
+
+
+

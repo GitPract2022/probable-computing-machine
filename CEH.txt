@@ -1,0 +1,153 @@
+kali linux
+kali/kali
+
+Metasploitable2
+msfadmin/msfadmin
+
+================kali linux
+
+
+====================Metasploitable2
+uname -a
+
+
+==========3.Anonymity
+ 
+nano /etc/proxychanins.conf
+
+www.duckduckgo.com
+
+www.dnsleaktest.com //check for DNS leaks
+
+proxychains firefox www.duckduckgo.com
+
+-----------Alternet to Proxychains
+git clone https://github.com/Und3rf10w/kali-anonsurf.git
+cd kali-anonsurf/
+ls
+./installer.sh
+anonsurf --help
+anonsurf start
+anonsurf status
+anonsurf myip
+----------------
+
+https://vpnbook.com/freevpn
+
+cd /Downloads/VPNBook.com-OpenVPN-Euro2
+sudo openvpn vpnbook-euro2-udp25000.ovpn
+
+service tor restart
+
+-------------------
+
+cloudflair DNS - 1.1.1.1
+
+nano /etc/resolve.conf
+save - ctrl 0 enter
+exit - ctrl x
+
+==============
+106.210.162.43 - Airtel
+==============
+42.106.216.253 - Vodafone 
+==============
+103.127.20.70  - Broadband
+==============
+
+Linux Basics
+
+nano xyz
+man cp
+
+apt-get install terminator
+
+
+===========Information Gathereing
+
+https://dnsstuff.com
+https://toolbar.netcraft.com/site_report
+
+Gathering Email #theharvester -d google.com -l 100 -s google
+whois abc.com
+
+apt-get install nmap -- ubuntu
+yum install namp     -- fedora
+
+nmap -v
+
+apt-get install zenmap
+
+nmap IP
+namp IP IP
+nmap IP/subnet
+nmap -iL targets.txt
+nmap 192.168.1.1/24 --excludefile exclude.txt
+nmap -A 192.168.1.100
+
+=============Metasploit
+
+service postgresql start
+msfconsole
+
+msf>
+help
+use exploit/windows/browser/adobe_flash_avm2
+show 
+show options
+show payloads
+show targets
+show info
+exit
+msfconsole
+search type:exploit platform:windows flash
+use exploit/windows/browser/adobe_flash_avm2
+set SRVPORT 80
+exploit
+
+exploits
+auxiliary
+post
+palylods
+encoders
+nops
+
+cd /user/share/metasploit-framework/
+
+msfconsole
+search
+use
+show option
+
+set RHOST 192.168.0.6
+set RPORT 21
+
+exploit
+
+Metasploit community - Web GUI
+downlaod - https://www.rapid7.com/products/metasploit/download/community
+
+localhost:3790
+
+=================
+Metasploit software for Penetration Testing PT
+=================
+
+========================Web Server Hacking
+
+sudo wget https://nmap.org/dist/zenmap-7.93-1.noarch.rpm
+
+nano /etc/apt/sources.list
+https://docs.kali.org/
+
+install apt gdebi
+
+Install Zenmap
+~ sudo alien ZenmapFile
+~ sudo chmod +777 / sudo chmod +x
+~ sudo dpkg -i NewZenmapFile
+
+
+
+
+

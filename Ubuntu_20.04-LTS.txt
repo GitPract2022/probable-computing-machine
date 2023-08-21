@@ -1,0 +1,768 @@
+
+linux
+ubuntu64
+
+========================================
+Ubuntu20.04-LTS
+
+katana / zo****2023
+
+Groups
+
+
+======================================
+
+Groups
+katana:x:1000:
+
+Users
+katana:x:1000:1000:katana:/home/katan:/bin/bash
+santos:x:1001:1002:/home/santos:/bin/bash
+meta - meta2022
+Pete - Pete2022
+
+
+=====================
+groupadd -g 1001 network
+useradd santos -s /bin/bash -d /home/santos
+
+useradd -s /bin/bash -d /home/vivek/ -m -G sudo vivek
+======================
+
+grep '^katana' /etc/passwd
+grep '^katana' /etc/group
+
+================
+login to root
+
+su
+password
+
+changing password
+
+sudo su -
+enter password
+
+sudo passwd root
+enter password
+
+sudo passwd katana
+
+whoami
+
+=================================
+
+Enable Feature windows rescaling
+ 
+cd /media/katana/VBox_GAs_6.0.24/
+sudo bash VBoxLinuxAdditions.run
+
+man <cmd> 
+help cd
+type cd
+touch --help
+iptables --help
+
+sudo apt install net-tools --> ubuntu
+sudo dnf install net-tools --> centos
+sudo apt install wireless-tools && apt install ipmiutil
+
+cat .bash_history
+history
+echo $HISTFILESIZE
+eco $HISTSIZE
+echo "HISTTIMEFORMAT=#%d/%m/%y %T"" >> .bash.rc
+
+katana@ubuntu2004:~$ id
+uid=1000(katana) gid=1000(katana) groups=1000(katana),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),132(lxd),133(sambashare)
+
+sudo apt update && sudo apt install terminator
+
+=============
+
+#absolute path 
+cd /home/student/Desktop
+cd ~/Desktop
+ls ~/Desktop/
+sudo tail /var/log/boot.log
+ls /etc/cron.daily/
+
+#relative path
+ls -la ~
+cat ./hosts
+cat cron.daily/
+
+-----------------
+~ --> home directory
+ls ..
+cd ..
+
+-------------------
+tree
+
+sudo apt install tree
+tree -d --> directory
+tree -f ~ --> absolute path
+
+-----------------
+ls -l > ls.txt  --redirect
+ls -l >> ls.txt --append o/p
+tty
+tail -n 3 /etc/shadow 2>> error.txt
+cut -d ":" f2
+ifconfig | grep ether | tee mac.txt
+
+sha256sum /usr/bin/ls ./ls
+echo "a" > ls
+cmp a b
+diff a b
+
+sudo apt install ssh
+
+----------------
+tar - archive and compress
+man tar
+tar --help
+
+c - create archive
+z - compress using gzip
+v - verbose
+f - filename
+x - extract
+t - view
+
+sudo du -sh /etc/
+sudo tar -cjvf etc-$(date +%F).tar.bz2 /etc/
+
+wget https://ftp.gnu.org/ ---- download file
+
+----------------
+cp - copy
+cp /etc/passwd ./user.txt
+cp -iv 
+cp -r
+cp -p
+
+mv processes.txt ./Moon
+
+touch report.txt logs
+stat report.txt logs
+
+mkdir -p first/second/third
+
+file Desktop/linux.jpeg
+ls -F
+ls -l
+
+----------------------
+
+sudo find /etc -type f -mtime 0
+sudo find /etc/ -time -7 -type -exec/ok cp {} /root/backup \;
+
+-------------------
+sudo apt update mlocate
+sudo updatedb
+ls /var/lib/mlocate/
+locate -S
+locate -b
+locate -b '\name'
+which rm
+which -a rm
+find . -name todo.txt
+find . -name todo.txt -delete
+sudo find /var/ -type f -user gdm -ls
+
+-------------------
+ls -li
+touch a.txt
+stat a.txt
+ln a.txt b.txt ---> hard link
+find . -inum xxxxx ---> find inode number
+ls -lia
+ls -lid
+
+-------------------
+
+ln -s /etc/passwd ./paswd  --> create symlink/soft link
+
+ls /
+df -h --> see mount disk
+
+mv -i dir1/dir2/a.txt dir1/  --> -i interactive move
+mv --> used for move and rename the file and dir
+
+sudo rm -rf /home/student/a.txt
+echo *.txt
+
+------------
+
+grep user /etc/ssh/ssh_config
+grep -in "SSH" /etc/ssh/ssh_config
+grep -R 127.0.0.1 /etc/ ----> recursive search in directory
+
+sudo netstat -tupan | grep 53
+
+======================
+vi editor
+
+sudo apt install vim --> ubuntu
+sudo dnf install vim --> centos
+
+w! -- save
+q! -- quit with out saving
+wq! -- save and exit
+shift ZZ
+
+esc - command mode
+i - insert mode
+: - end of line mode
+
+=======================
+USER Account Management
+=======================
+/etc/passwd
+/etc/shadow
+
+useradd user1
+passwd user1 ****
+
+less /etc/shadow
+tail /etc/shadow
+
+-----------
+/etc/group
+
+grep katana /etc/passwd
+grep 1000 /etc/group
+
+groups
+groups katana
+id
+
+sudo useradd u1 
+sudo passwd u1  --> change passwd
+***
+***
+
+sudo useradd 
+-m [create home directory] 
+-d [specify home dirctory]
+-c [comment]
+-s [login shell]
+-G [2nd group]
+
+sudo useradd -e 2020-12-31 u2 ---- passwd expire date
+
+sudo groupadd engineering
+tail -3 /etc/group
+sudo usermode -aG engineering u1
+
+sudo groupmode -n engineers engineering
+sudo groupdel engineers
+
+-------------
+sudo usermod -c "developer" james
+sudo usermod -G deamon james
+sudo usermod -G dev,mgmt james
+sudo usermod -aG ---> adding to new groups as well as keeping previous grops
+
+sudo userdel u1
+sudo userdel -r james --> remove home directory
+
+---------------
+RUID - real
+EUID - effective
+
+who -- real
+whoami -- effective
+id
+
+sudo apt install openssh-server
+sudo systemctl status ssh
+
+who -Ha
+w
+uptime
+
+ls /var/log/wtmp
+
+================
+File permission
+================
+read - r
+write - w
+execute - x
+
+owner, group, other
+
+ls -l
+who -a
+
+chmod u-r users.txt  --remove read permission
+chmod u-w users.txt  --remove right permission
+
+-----
+octal notation permission
+
+read - 4
+write - 2
+execute - 1
+no perm - 0
+
+rwx - 7
+rw- - 6
+r- 4
+rw-rw-r-- - 664
+rwxr---wx - 723
+
+stat a1.txt
+
+-------
+changing file permission (chmod)
+
+u - user
+g - group
+o - other
+
+- remove
++ add
+= 
+
+chomd u-w user.txt -- remove write permission from owner
+
+chmod u+rwx user.txt -- add rwx perm for owner
+
+chmod ug-r,u+x,o-rwx user.txt
+
+chmod a+r user.txt
+
+---------------
+chown toor cpu.txt -- changing file owner
+
+------------
+SUID Set User ID
+
+sudo chmod 4755 /user/bin/cat -- set suid
+sudo chmod u+s /user/bin/cat
+
+which passwd
+
+find /usr/bin/ -perm -4000 -ls
+
+-------------
+SGID Set Group ID
+
+sudo chmod 2770 /programming/
+sudo g+s /programming/
+
+groups meta
+groups Pete
+
+ls -ld /programming/
+-----------
+groupadd programmers
+useradd -s /bin/bash pr1
+useradd -s /bin/bash pr2
+usermod -aG programmers pr1
+usermod -aG programmers pr2
+mkdir /programming
+chown pr1:programmers /programming/
+
+SGID set to share the dir/group for all ower in same group
+
+================
+File attribute
+===============
+lsattr
+sudo chattr +a user.txt
+
+lsattr -R dir1/   --R for recurive
+
+===============
+Processess
+==============
+
+init / systemd - 1
+fork
+parent
+child
+daemon
+zombie
+orphan
+
+kill -l
+pgrep -l gedit
+pidof firefox
+kill -SIGINT $(pidof firefox)
+sudo systemctl status ssh
+sudo kill -1 $(cat /var/run/sshd.pid)
+cat /var/run/sshd.pid
+
+sleep 15
+
+foreground fg
+background bg
+
+ls -l /home/katana & -- background
+ping -c 5 google.com & -- backgroud
+ping -c 5 google.com > /dev/null 2>&1 &
+
+jobs -l
+fg - bring
+backgroup job in foreground
+bg %1 - resume
+fg %1 - resume
+
+pgrep -l sleep
+nohup sleep 123 & - will not kill the process if the terminal session is close
+
+ps -ef | wc -l
+ps -aux | less
+ps aux --sort=%mem | less
+ps -ef | grep sshd
+pgrep sshd
+pgrep -l sshd
+pstree -c | less
+
+top -- print current process stats
+q to exit
+sort
+xyb - select and bold
+d - interval time
+e - size
+<>
+memory - m
+cpu - 
+top -d 1 n 3 -b > top_processes.txt
+grep rsyslogd top_processes.txt
+
+sudo apt update && sudo apt install htop
+
+htop
+f - configure
+q - exit
+
+===============
+Networking
+==============
+
+ifconfig -a
+ip address show
+route -n
+ip route show
+systemd-resolve --status   --dns stat
+
+ifconfig enp0s3 down/up
+ifconfig -a
+
+ip link set enp03s3 down/up
+ip link show dev enps03
+
+ifconfig enp0s3 192.168.0.111/24 up
+
+route -n
+route del default gw 192.168.0.1
+route add default gw 192.168.0.2
+
+------------
+ls /etc/netplan/
+
+systemctl stop NetworkManager
+systemctl disble NetworkManager
+systemctl status NetworkManager
+systemctl is-enabled NetwrokManager
+
+vim /etc/netplan/01-netconfig.yaml
+netplay apply
+
+-------------
+sudo netstat -tupan | grep :22
+
+sudo apt install nginx
+sudo systemctl status nginx
+
+ss -tupan 
+lsof -u katana  -- user
+sudo lsof -c nginx -- process
+sudo lsof -iTCP -sTCP:LISTEN -nP
+
+sudo apt install nmap
+sudo nmap x.x.x.x
+nmap -p 80 linux.com
+
+------------
+scp 
+
+ssh katana@x.x.x.x
+
+scp -P 22 ip.txt student@x.x.x.x:~
+diff x x
+scp -rp
+filezilla
+
+-------------
+ls -l /etc/ssh
+
+sshd_config
+
+iptables -A INPUT -p tcp --dport 2278 -s x.x.x.x -l ACCEPT
+------------
+
+rsync
+
+sudo rsync -av /etc ~/ect-backup/
+
+ping 
+-n -- no reverse lookup
+-t -- router ip in path
+-c -- count
+
+------
+ssh
+systemctl status ssh
+sudo systemctl restart ssh
+sudo systemctl stop ssh
+sudo systemctl start ssh
+
+cat .ssh/known_hosts
+sudo dnf install telnet -- centOS
+sudo dnf install nmap
+sudo apt install telnet -- ubuntu	
+sudo apt install nmap
+
+nmap -p 22 x.x.x.x  -Pn
+
+----iptables
+sudo iptables -vnL
+ufw - uncomplicated firewall
+
+sudo ufw status verbose
+ssh -vv student@x.x.x.x
+
+sudo tail -f /var/log/auth.log
+
+--------------
+
+server config  - /etc/ssh/sshd_config
+client config - /etc/ssh/ssh_config
+
+sudo apt update && sudo apt install openssh-server openssh-clients
+
+sudo systemctl ssh
+ps -ef | grep sshd
+systemctl is-enabled ssh
+ssh -p 22 -l student x.x.x.x
+
+--------
+rsync over network
+
+sudo rsync -av -e ssh /etc/ student@x.x.x.x:~/etc-centos/  ---backup
+sudo rsync -av -e ssh --delete /etc/ student@x.x.x.x:~/etc-centos/
+
+sudo rsync -av -e ssh student@x.x.x.x:~/my_project . --- copy from remote
+
+-------
+wget -- downloading files
+
+sudo apt install wget
+wget https://abc
+
+wget -P Kali/ https://abc
+-P -- folder
+--limit-rate=100k/m/g  -- rate
+-c --resume download
+-i --multiple download
+-b --background
+
+tail -f wget-log
+nohup wget 
+
+======================
+Software Management
+======================
+
+APT 
+apt update
+apt install apache2
+systemctl start apache2
+
+apt list --upgradable
+sudo apt remove apache2
+sudo apt purge apache2
+ls -l /var/cache/apt/archives/
+du -sh /var/cache/apt/archives/
+apt list | wc -l
+apt list | grep postfix
+apt list --installed | wc -l
+apt show zzuf
+apt install synaptic -- graphical install/remove package manager
+
+--------
+dpkg --info abc
+sudo dpkg -i abc
+dpkg-query -l | grep chrome
+which -a ls
+dpkg -S /bin/ls
+dpkg -L coreutils | less
+--------------
+compiling C programs
+
+sudo apt update && suod apt install build-essential -- gcc ,g++
+
+sudo dnf group install "Development Tools"   -- centOS
+
+gcc hello.c -o hello
+./hello
+
+https://downloads.apache.org
+apt show apache2
+
+ProFTPD -- PFTPD
+wget -c abc
+md5sum abc
+tar -xzvf abc
+
+======================
+System Administration
+======================
+
+system hardware information
+
+sudo su
+password:
+
+lshw
+lshw -json
+lshw -html > lshw.html
+inxi -Fx
+lscpu
+lshw -C cpu
+lscpu | grep -i mhz
+dmidecode -t memory
+top 
+free -m
+clear
+lspci
+lsusb
+lshw -C disk -short
+lsblk
+fdisk -l
+fdisk -l /dev/sda
+hdparm -i /dev/sda
+hdparm -t --direct /dev/sda
+cat /proc/version
+uname -r -a
+apt install acpi
+acpi -bi
+
+--------------------
+systemd
+systemd-analyze
+systemd --version
+systemd-analyze blame
+
+------
+Mount & unmount file system
+
+mount
+mount -l -t ext4/vfat
+
+sudo mount -t vfat /dev/sdb /home/student/Desktop/usb
+sudo umount /home/student/Desktop/usb
+
+sudo fdisk -l
+sudo apt install gparted
+sudo gparted
+
+------------
+anacron - runs commands periodically
+
+@monthly 15 bakcup date >> /temp/anacorn.txt
+
+sudo vi /etc/anacrontab
+cat /etc/anacrontab
+var/spool/anacorn
+anacron -T
+sudo anacron -d
+
+sudo cat /var/spool/anacorn/backup
+
+---------------------
+pgrep -l cron
+ls -l /etc/crontab
+ls /var/spool/cron/
+which crontab
+
+crontab -e
+tail -f /var/log/syslog
+
+-----------------------
+dd - read and write from special device file
+
+df -h
+fdisk -l
+lsblk
+dd if=/dev/sdb of=/home/student/bakcup-usb.imb status=progress - backup
+dd if=/home/student/bakcup-usb.imb of==/dev/sdb status=progress - restore
+
+umount /media/student/950C-D952
+mkfs.vfat /dev/sdb
+dd if=/home/student/downloads/linuxmint-20xxx.64bit.iso of=/dev/sdb bs=4M status=progress
+
+==========================
+Bash/Shell Scripting
+======================
+
+echo $0
+cat /etc/shells
+mkdir scripts
+
+./first_script.sh -- execute
+
+echo $PATH
+echo $HOME
+env | grep USER
+env | grep SHELL
+printenv HOME
+
+OS=Linux
+$OS
+\$OS
+echo $OS
+
+alias
+alias c="clear"
+
+.bashrc
+
+-------
+vi display.sh
+#!/bin/bash
+if [ -f "$1" ]
+then
+echo "The argument is a file. displaying its content..."
+sleep1
+cat $1
+elif [ -d "$1" ]
+then
+ echo "The argument is a directory, running ls -l ..."
+ sleep 1
+ ls -l $1
+else 
+echo "The argument ($1) is neither a file nor a directory."
+fi
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+

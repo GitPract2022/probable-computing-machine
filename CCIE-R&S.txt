@@ -1,0 +1,104 @@
+================================
+Practical 1 - 
+================================
+
+show ip bgp summary
+show tcp brief
+debug ip bgp
+clear ip bgp *
+
+
+==========================
+
+R1#
+interface Loopback1
+ip address 1.1.1.1 255.255.255.255
+!
+router bgp 123
+no synchronization
+bgp router-id 111.111.111.111
+bgp log-neighbor-changes
+neighbor 2.2.2.2 remote-as 123
+neighbor 2.2.2.2 update-source Loopback1
+neighbor 3.3.3.3 remote-as 123
+neighbor 3.3.3.3 password secret-pw
+neighbor 3.3.3.3 update-source Loopback1
+no auto-summary
+
+R3#
+interface Loopback1
+ip address 3.3.3.3 255.255.255.255
+!
+router bgp 123
+no synchronization
+bgp log-neighbor-changes
+neighbor my-as peer-group
+neighbor my-as remote-as 123
+neighbor my-as update-source Loopback1
+neighbor 1.1.1.1 peer-group my-as
+neighbor 1.1.1.1 password secret-pw
+neighbor 2.2.2.2 peer-group my-as
+no auto-summary
+
+------------------------
+
+R1#
+router bgp 123
+neighbor 172.16.16.6 remote-as 678
+
+R3#
+router bgp 123
+neighbor 4.4.4.4 remote-as 45
+neighbor 4.4.4.4 update-source loopback1
+neighbor 4.4.4.4 ebgp-multihop 2
+
+
+R5#
+router bgp 45
+no synchronization
+bgp log-neighbor-changes
+network 21.0.0.0
+network 22.1.1.0 mask 255.255.255.0
+
+R6#
+router bgp 678
+redistribute static metric 9
+redistribute eigrp 6
+!
+router eigrp 6
+network 10.0.0.0
+!
+ip route 34.0.0.0 255.255.255.0 null0
+
+*****************
+redist eigrp 6 route-map just-30-something
+route-map just-30-something, permit, sequence 10
+Match clauses:
+ip address (access-lists): permit-30-39
+Set clauses:
+Policy routing matches: 0 packets, 0 bytes
+
+Standard IP access list permit-30-39
+10 permit 32.0.0.0, wildcard bits 7.255.255.255 (1538 matches)
+20 permit 30.0.0.0, wildcard bits 1.255.255.255 (1130 matches)
+*****************
+
+R3# aggregate-address 23.0.0.0 255.0.0.0 summary-only
+R3# aggregate-address 23.0.0.0 255.0.0.0 summary-only as-set
+
+-------------------
+
+R1#
+router bgp 123
+neighbor 3.3.3.3 remote-as 123
+neighbor 3.3.3.3 update-source Loopback1
+neighbor 3.3.3.3 default-originate route-map check-default
+!
+ip route 0.0.0.0 0.0.0.0 Null0
+!
+ip prefix-list def-route seq 5 permit 0.0.0.0/0
+!
+route-map check-default permit 10
+match ip address prefix-list def-route
+
+********************************

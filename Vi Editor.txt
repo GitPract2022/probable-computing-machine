@@ -1,0 +1,66 @@
+vi editor
+
+sudo apt install vim --> ubuntu
+sudo dnf install vim --> centos
+
+w! -- save
+q! -- quit with out saving
+wq! -- save and exit
+shift ZZ
+
+esc - command mode
+i - insert mode
+: - end of line mode
+
+vimtutor
+
+:!ls
+
+Search in vim
+/ enter
+/ ssh enter
+? 
+navigate n N
+:%s/no/XXX/g --- search and replace
+
+:e!  -- undo or revert back to last saved version
+:u
+ctrl r
+
+o - new line
+dd -- cut
+p -- paste
+y - copy
+
+sshd_config
+
+. - current directory
+~/. - home directory
+
+ifconfig > a
+who -a > b
+
+vi a b -- open multiple files
+:n -- switch to another file
+:prev -- switch back to another file
+
+vi -o a b
+ctrl + w -- move between window
+
+shift + V - select
+y -- copy
+p -- paste
+
+cp /etc/ssh/sshd_config .
+vi -d /etc/ssh/sshd_config sshd_config
+vimdiff -d /etc/ssh/sshd_config sshd_config
+
+
+remove swap file
+Recover
+r
+:q!
+rm .ifconfig.txt.swp
+
+
+

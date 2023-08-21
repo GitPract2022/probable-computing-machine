@@ -1,0 +1,98 @@
+
+conf t#shell processing full   -- IOS & IOS-XE -- configuration option
+no shell processing
+
+conf t#terminal shell -- IOS-XE -- terminal 
+terminal no shell
+
+show shell functions
+sh ip route | nl | more
+sh run linenum
+
+Linux, TCL & EEM
+
+=================================
+Documentation:
+=================================
+TCL: http://bit.ly/2mbkRoT
+EEM: http://bit.ly/2lQZWHl
+Shell: http://bit.ly/2kwMyYN
+==================================
+tclsh
+tclquit
+
+tclsh
+foreach ipaddr
+	{
+	10.1.1.1
+	10.1.1.2
+	10.1.1.3
+	} 
+{ping $ipaddr}
+
+tclsh ping.tcl
+
+--------------------
+EEM
+
+event manager applet GIG0_DOWN
+ event syslog pattern "" period 1
+ action 1.0 cli command "enable"
+ action 2.0 cli command "config terminal"
+ action 3.0 cli command "interface gi0/0"
+ action 4.0 cli command "shutdown"
+ action 5.0 cli command "no shutdown"
+ action 6.0 syslog msg "GIG 0/0 went down!"
+ !
+ end
+
+debug event manager action cli
+
+------------------------
+Cisco IOS shell
+
+for x in 1 2 3
+    do 
+    ping 10.1.1.$x
+    done
+
+function testping(){
+    ping 10.1.1.1
+    ping 10.1.1.2
+    ping 10.1.1.3
+    ping 10.1.1.4
+}
+
+--------------------------------
+
+/ filter
++ include
+- exclude
+
+grep
+
+-u end
+-b start
+-v exclude
+-i ignore case
+
+--------------------------------
+
+for xx in `interface Ethernet`; do echo $xx `show int $xx | inc input errors` ; done
+
+function shrun(){
+ n=-1
+ while true; do
+     let n++
+      if [[ $n -le 3 ]]; then
+         show run int g0/$n
+         echo $n
+     else
+ break;
+     fi
+ done
+ }
+
+-----------------------------------------
+
+
