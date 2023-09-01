@@ -24,6 +24,8 @@ fi
 $1 and $2 denote the first and second command line argument passed, respectively
 $# Denotes the number of command line arguments or positional parameters
 The $# refers to the number of parameters received at run time, not a specific parameter. $1 gets replaced by whatever was in location 1 on the command line when the script was executed.
+
+$? last command value
 ------------------------
 
 ====varialble====
@@ -284,6 +286,112 @@ do
 		;;
 	esac
 ----------------------------------------------
+====================Functions===================
+function print_something () {
+	echo "I'm a simple function!"
+}
+
+display_something () {
+	echo "Hello Functions!"
+}
+
+print_something
+display_something
+------------------------------------------------
+
+create_files () {
+	echo "Creating $1"
+	touch $1
+	chmod 400 $1
+	echo "Creating $2"
+	touch $2
+	chmod 455 $2
+	return 10
+}
+Create_files aa.txt bb.txt
+echo $?
+
+function lines_in_file () {
+	grep -c "$1" "$2"
+}
+n=$(lines_in_file "usb" "/var/log/dmesg")
+echo $n
+---------------------------------------------------
+# Bash comment
+:set nu
+set nu
+---------------------------------------
+bash_shebang_comments
+#!/bin/bash
+#!/usr/bin/python3
+-----------------------------------
+===========LAB 1 drop ip================
+for ip in $( cat ips.txt )
+do
+	echo "Dropping packets from $ip"
+	iptables -I INPUT -s $ip -j DROP
+done
+-----------------------------------------
+===========LAB 2 Connection testing==========
+output="$(ping -c 3 $1)"
+#echo $output"
+
+if [[ "$output" == *"100 packet loss"* ]];then
+	echo "The network connection to $1 is not working."
+else	
+	echo "The network connection to $1 is working."
+fi
+----------------------------------------------------------
+=============LAB 3 System Administartor script==============
+#!/bin/bash
+PS3="Your choice:"
+select ITEM in "Add User" "List All Process" "Kill Process" "Install Program" "Quit"
+do
+if [[ $REPLY -eq 1 ]]
+then
+	read -p "Enter the username:" username
+	output="$(grep -w $username /etc/passwd)"
+	if [[ -n "$output" ]] #string is not zero length
+	then	
+		echo "The Username $username already exists."
+	else
+		sudo useradd -m -d /bin/bash "$username"
+		if [[ $? -eq 0 ]]
+		then
+			echo "The user $user was added successfully."
+			tail -n 1 /etc/passwd
+		else
+			echo "There was an error adding the user $username."
+		if
+	fi
+elif [[ $REPLY -eq 2 ]]
+then
+	echo "Listing all processes..."
+	sleep 1
+	ps -ef
+elif [[ $REPLY -eq 3 ]]
+then
+	read -p "Enter the process to kill:" process
+	pkill $process
+elif [[ $REPLY -eq 4 ]]
+then
+	read -p "Enter the program to install:" app
+	sudo apt update & sudo apt install $app
+elif [[ $REPLY -eq 5 ]]
+then
+	echo "Quitting..."
+	sleep 1
+	exit
+else
+	echo "Invalid menu selection."	
+fi
+done
+---------------------------------------------------------------------
+
+
+
+
+
 
 
 
