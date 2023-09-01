@@ -105,7 +105,15 @@ git pull origin feature-1
 git log --oneline
 git push origin --delete feature-1
 
+--------------------Working----------------------------------------------
 
+git clone https://github.com/GitPract2022/probable-computing-machine.git
+git status
+git add 'Shell scripting.txt'
+git commit -m 'Modified Shell Scripting.txt file'
+git status
+git push origin main
+-------------------------------------------------------------------------
 
 
 
