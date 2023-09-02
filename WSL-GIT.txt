@@ -113,8 +113,22 @@ git add 'Shell scripting.txt'
 git commit -m 'Modified Shell Scripting.txt file'
 git status
 git push origin main
+git push
 -------------------------------------------------------------------------
+===============Branching=================
+git branch feature-1
+git branch
+git checkout feature-1 --> switch  between branch / master
+git branch
+git log --online  --> check history
+git checkout master --> switch  between branch / master
 
+git checkout --track origin/feature-1  --> add the branch feature-1 in github gui, and to added it to local repository
 
+git pull origin feature-1  --> if any changes on branch feature-1 in github gui, to local repository
 
+git push origin --delete feature-1 --> delete branch in github
+git checkout master
+git branch -D feature-1 --> delete branch from local master 
+------------------------------------------------------------------------------
 
