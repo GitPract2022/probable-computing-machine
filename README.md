@@ -1,3 +1,4 @@
 # probable-computing-machine
-The information provided is only for eductionaly purpose only.
+==============WELLCOME MY FRIENDS=================
+The information provided is only for education purpose only.
 Learn Networking, Linux, Git, Wireshark, Scripting...!
